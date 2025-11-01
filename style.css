@@ -280,11 +280,15 @@ input[type=range]::-webkit-slider-runnable-track {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
-    padding: 30px 0 100px 380px;
+    padding: 30px 60px 100px 380px;
+    width: 100%;
+    max-width: 1400px;
+    justify-content: center;
 }
 
 .product-card {
-    width: 300px;
+    width: 100%;
+    max-width: 350px;
     height: 420px;
     background: #fff;
     border-radius: 14px;
@@ -306,9 +310,10 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 
 .product-img {
-    width: 300px;
+    width: 100%;
     height: 250px;
     background-color: #cfcfcf;
+    object-fit: cover;
 }
 
 .product-info {

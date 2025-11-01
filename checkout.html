@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Complete Your Order</title>
+    <link rel="stylesheet" href="checkout.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+</head>
+<body>
+    
+    <header class="header">
+    <div class="header-main">
+      <a href="main.html" class="header-left">
+        <p class="step">Step</p>
+        <p class="ordering">Ordering</p>
+      </a>
+      <div class="header-right">
+        <a href="#" class="cart-btn">
+          <span class="cart-text">Cart</span>
+          <span class="bike-icon">
+            <img src="delivery-man_1.png" alt="delivery">
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="header-middle">
+      <h1>checkout</h1>
+    </div>
+  </header>
+
+  <div class="header-placeholder"></div>
+
+  <!-- CHECKOUT -->
+  <section class="checkout-section">
+    <div class="checkout-box">
+      <p class="total">Total payment: <span id="total-amount">0₾</span></p>
+
+      <form id="checkout-form" class="checkout-form" autocomplete="off">
+        <label for="card-number">Card number</label>
+        <input id="card-number" inputmode="numeric" placeholder="2456 1665 5155 5151" maxlength="19" required>
+
+        <div class="row">
+          <div class="half">
+            <label for="expiry">Validity period</label>
+            <input id="expiry" placeholder="MM/YY" maxlength="5" required>
+          </div>
+          <div class="half">
+            <label for="cvc">CVC / CVV</label>
+            <input id="cvc" inputmode="numeric" placeholder="3 digits" maxlength="3" required>
+          </div>
+        </div>
+
+        <label for="owner">Card owner name</label>
+        <input id="owner" placeholder="J. Smith" required>
+
+        <button id="pay-btn" class="pay-btn" type="submit">Pay</button>
+      </form>
+    </div>
+  </section>
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-logo">
+      <a href="index.html" class="footer-logo-link">
+        <p><span class="footer-logo-step">Step</span><br><span class="footer-logo-restaurant">Restaurant</span></p>
+      </a>
+    </div>
+    <div class="footer-links">
+
+
+      <a href="index.html"> <svg xmlns="http://www.w3.org/2000/svg" height="14" width="14"
+          viewBox="0 0 512 512">
+          <path fill="#FFD43B"
+            d="M169.7 .9c-22.8-1.6-41.9 14-47.5 34.7L110.4 80c.5 0 1.1 0 1.6 0c176.7 0 320 143.3 320 320c0 .5 0 1.1 0 1.6l44.4-11.8c20.8-5.5 36.3-24.7 34.7-47.5C498.5 159.5 352.5 13.5 169.7 .9zM399.8 410.2c.1-3.4 .2-6.8 .2-10.2c0-159.1-128.9-288-288-288c-3.4 0-6.8 .1-10.2 .2L.5 491.9c-1.5 5.5 .1 11.4 4.1 15.4s9.9 5.6 15.4 4.1L399.8 410.2zM176 208a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm64 128a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM96 384a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
+        </svg> Home</a> 
+
+
+
+
+    </div>
+    <div class="footer-social">
+      <p>Follow us:</p>
+
+      <a href="https://www.facebook.com/" target="_blank" class="social-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_(2019).svg" alt="Facebook"
+          width="24" height="24">
+      </a>
+
+      <a href="https://www.instagram.com/" target="_blank" class="social-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="24"
+          height="24">
+      </a>
+
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Step Restaurant. All rights reserved. This Website is made by <span>Oto Kristesiashvili and Luka Bediashvili</span>.</p>
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="checkout.js"></script>
+</body>
+</html>

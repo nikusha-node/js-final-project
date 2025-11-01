@@ -136,11 +136,9 @@ function updateCartTotal() {
     totalPriceElement.textContent = total.toFixed(2) + ' ₾';
 }
 
-// Render the cart
 function renderBasket() {
     if (!basketBody) return;
     
-    // Clear existing content
     basketBody.innerHTML = '';
     
     if (cartItems.length === 0) {
@@ -176,7 +174,6 @@ function renderBasket() {
                     <button type="button" class="qty-btn plus">+</button>
                 </div>
             </td>
-            <td class="product-price">${item.price ? item.price.toFixed(2) : '0.00'} ₾</td>
             <td class="product-total">${itemTotal.toFixed(2)} ₾</td>
             <td class="product-spicy">${item.spiciness !== undefined ? item.spiciness : 'No'}</td>
             <td class="product-nuts">${item.nuts ? 'Yes' : 'No'}</td>
@@ -204,39 +201,35 @@ function renderBasket() {
     if (totalPriceElement) {
         totalPriceElement.textContent = `${total.toFixed(2)} ₾`;
     }
+    
 }
+
 
 // Handle checkout
 async function handleCheckout(event) {
     event.preventDefault();
     
     if (cartItems.length === 0) {
-        alert('Your cart is empty!');
+        Swal.fire({
+            icon: 'error',
+            title: 'Your cart is empty',
+            text: 'Please add items to your cart before checking out',
+            confirmButtonColor: '#ff6b00'
+        });
         return;
     }
     
-    try {
-        const orderItems = cartItems.map(item => ({
-            productId: item.id,
-            quantity: item.quantity || 1
-        }));
-        
-        // In a real app, you would send this to your backend
-        console.log('Order items:', orderItems);
-        
-        // For demo purposes, just show success message
-        alert('Order placed successfully!');
-        
-        // Clear cart
-        cartItems = [];
-        localStorage.setItem('cart', JSON.stringify(cartItems));
-        renderBasket();
-        updateCartCount();
-        
-    } catch (error) {
-        console.error('Error during checkout:', error);
-        alert('There was an error processing your order. Please try again.');
-    }
+    // Calculate total and save to localStorage
+    const total = cartItems.reduce((sum, item) => {
+        return sum + (parseFloat(item.price) * (item.quantity || 1));
+    }, 0);
+    
+    // Save cart data for checkout page
+    localStorage.setItem('orderTotal', total.toFixed(2));
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    
+    // Redirect to checkout page
+    window.location.href = 'checkout.html';
 }
 
 // Make functions available globally
