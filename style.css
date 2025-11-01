@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+body {
+    background-image: url('https://restaurant.stepprojects.ge/images/p_bg.jpg');
+}
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -186,7 +190,7 @@ nav {
     padding: 10px;
     flex-direction: column;
     position: absolute;
-    bottom: 97px;
+    top: 810px;
     left: 50px;
     border-radius: 8px;
     background-color: #f1f1f1;

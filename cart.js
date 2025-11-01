@@ -1,3 +1,4 @@
+// Scroll effect for header
 window.addEventListener("scroll", function() {
     const header = document.querySelector(".fixed");
     if (window.scrollY > 0) {
@@ -7,92 +8,104 @@ window.addEventListener("scroll", function() {
     }
 });
 
-const API_GET = "https://restaurant.stepprojects.ge/api/Baskets/GetAll";
-const API_ADD = "https://restaurant.stepprojects.ge/api/Baskets/Add";
-const API_DELETE = "https://restaurant.stepprojects.ge/api/Baskets/DeleteProduct/";
+const basketBody = document.getElementById("basketBody");
+const totalPriceElement = document.querySelector("#price");
+let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
-const body = document.getElementById("basketBody");
-const totalPrice = document.getElementById("price");
+// Initialize cart when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    renderBasket();
+    updateCartCount();
+});
 
-let basket = [];
-
-function baskett() {
-  fetch(API_GET)
-    .then((response) => response.json())
-    .then((data) => {
-      basket = data;
-      renderBasket();
-    });
+// Update cart count in header
+function updateCartCount() {
+    const cartCount = document.querySelector('.cart-count');
+    if (cartCount) {
+        const totalItems = cartItems.reduce((total, item) => total + (item.quantity || 1), 0);
+        cartCount.textContent = totalItems;
+        cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+    }
 }
 
-function addProduct(product) {
-  fetch(API_ADD, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(product),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("product added:", data);
-      basket.push(data);
-      renderBasket();
-    });
-}
-
+// Delete product from cart
 function deleteProduct(id) {
-  console.log("Deleting product ID:", id);
+    cartItems = cartItems.filter(item => item.id !== id);
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    renderBasket();
+    updateCartCount();
+}
 
-  fetch(`${API_DELETE}${id}`, { method: "DELETE" })
-    .then((res) => {
-      if (res.ok) {
-        const index = basket.findIndex((item) => item.product.id == id);
-        if (index !== -1){
-            basket.splice(index, 1);
-        } 
+// Update product quantity
+function updateQuantity(id, change) {
+    const item = cartItems.find(item => item.id === id);
+    if (item) {
+        item.quantity = (item.quantity || 1) + change;
+        if (item.quantity < 1) {
+            deleteProduct(id);
+            return;
+        }
+        localStorage.setItem('cart', JSON.stringify(cartItems));
         renderBasket();
-      } else {
-        console.error("Failed to delete product:", res.status);
-      }
-    })
-    .catch((err) => console.error("Error deleting product:", err));
+        updateCartCount();
+    }
 }
 
+// Render the cart using template
 function renderBasket() {
-  body.innerHTML = "";
-  let sum = 0;
-  const template = document.getElementById('basketItemTemplate');
+    if (!basketBody) return;
+    
+    // Clear existing content
+    basketBody.innerHTML = '';
+    
+    if (cartItems.length === 0) {
+        basketBody.innerHTML = '<tr><td colspan="7" class="text-center">Your cart is empty</td></tr>';
+        if (totalPriceElement) {
+            totalPriceElement.textContent = '0.00 ₾';
+        }
+        return;
+    }
 
-  basket.forEach((item) => {
-    const clone = template.content.cloneNode(true);
-    const tr = clone.querySelector('tr');
-    
-  
-    tr.setAttribute('data-id', item.product.id);
-    
- 
-    const img = clone.querySelector('.item-image');
-    img.src = item.product.image;
-    img.alt = item.product.name;
-    
-    clone.querySelector('.item-name').textContent = item.product.name;
-    clone.querySelector('.item-price').textContent = item.product.price;
-    clone.querySelector('.item-quantity').textContent = item.quantity;
-    clone.querySelector('.item-spicy').textContent = item.product.spiciness || 'No';
-    clone.querySelector('.item-nuts').textContent = item.product.nuts ? 'Yes' : 'No';
-    
-   
-    const deleteBtn = clone.querySelector('.delete-btn');
-    deleteBtn.dataset.id = item.product.id;
-    deleteBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      deleteProduct(item.product.id);
+    const template = document.getElementById('basketItemTemplate');
+    let total = 0;
+
+    cartItems.forEach(item => {
+        const clone = template.content.cloneNode(true);
+        const tr = clone.querySelector('tr');
+        
+        // Set up the row
+        const img = clone.querySelector('.item-image');
+        img.src = item.image || '';
+        img.alt = item.name || '';
+        
+        // Update the template with item data
+        clone.querySelector('.item-name').textContent = item.name || '';
+        clone.querySelector('.item-price').textContent = item.price ? `${item.price.toFixed(2)} ₾` : '0.00 ₾';
+        
+        // Set up quantity controls
+        const quantityElement = clone.querySelector('.item-quantity');
+        quantityElement.textContent = item.quantity || 1;
+        
+        // Set up spicy and nuts indicators
+        clone.querySelector('.item-spicy').textContent = item.spiciness || 'No';
+        clone.querySelector('.item-nuts').textContent = item.nuts ? 'Yes' : 'No';
+        
+        // Set up delete button
+        const deleteBtn = clone.querySelector('.delete-btn');
+        deleteBtn.onclick = (e) => {
+            e.preventDefault();
+            deleteProduct(item.id);
+        };
+        
+        // Calculate item total
+        const itemTotal = (item.price || 0) * (item.quantity || 1);
+        total += itemTotal;
+        
+        basketBody.appendChild(clone);
     });
-    
-    body.appendChild(clone);
-    sum += item.product.price * item.quantity;
-  });
 
-  totalPrice.textContent = `${sum}$`;
+    // Update total price
+    if (totalPriceElement) {
+        totalPriceElement.textContent = `${total.toFixed(2)} ₾`;
+    }
 }
-
-baskett();
