@@ -8,14 +8,21 @@ window.addEventListener("scroll", function() {
     }
 });
 
+// DOM Elements
 const basketBody = document.getElementById("basketBody");
 const totalPriceElement = document.querySelector("#price");
+const checkoutBtn = document.querySelector(".checkout-btn");
 let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
 // Initialize cart when page loads
 document.addEventListener('DOMContentLoaded', () => {
     renderBasket();
     updateCartCount();
+    
+    // Add event listener for checkout button
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', handleCheckout);
+    }
 });
 
 // Update cart count in header
@@ -28,30 +35,108 @@ function updateCartCount() {
     }
 }
 
-// Delete product from cart
-function deleteProduct(id) {
-    cartItems = cartItems.filter(item => item.id !== id);
-    localStorage.setItem('cart', JSON.stringify(cartItems));
-    renderBasket();
-    updateCartCount();
+// Delete product from cart with SweetAlert2 confirmation
+async function deleteProduct(id, event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
+    const item = cartItems.find(item => item.id === id);
+    if (!item) return;
+    
+    try {
+        const result = await Swal.fire({
+            title: 'Remove Item',
+            text: `Are you sure you want to remove ${item.name || 'this item'} from your cart?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ff6b00',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, remove it!',
+            cancelButtonText: 'No, keep it',
+            customClass: {
+                confirmButton: 'swal-confirm-btn',
+                cancelButton: 'swal-cancel-btn'
+            },
+            buttonsStyling: false
+        });
+        
+        if (result.isConfirmed) {
+            cartItems = cartItems.filter(item => item.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+            
+            // Show success message
+            await Swal.fire({
+                title: 'Removed!',
+                text: 'The item has been removed from your cart.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false
+            });
+            
+            renderBasket();
+            updateCartCount();
+        }
+    } catch (error) {
+        console.error('Error in delete confirmation:', error);
+    }
 }
-
 // Update product quantity
 function updateQuantity(id, change) {
-    const item = cartItems.find(item => item.id === id);
-    if (item) {
-        item.quantity = (item.quantity || 1) + change;
-        if (item.quantity < 1) {
+    // Find the item in the cart
+    const itemIndex = cartItems.findIndex(item => item.id === id);
+    
+    if (itemIndex !== -1) {
+        const item = cartItems[itemIndex];
+        const currentQuantity = item.quantity || 1;
+        const newQuantity = currentQuantity + change;
+        
+        // If quantity is less than 1, remove the item
+        if (newQuantity < 1) {
             deleteProduct(id);
             return;
         }
+        
+        // Update the quantity
+        cartItems[itemIndex].quantity = newQuantity;
+        
+        // Save to localStorage and update the UI
         localStorage.setItem('cart', JSON.stringify(cartItems));
-        renderBasket();
+        
+        // Update the display
+        const quantityDisplay = document.querySelector(`.quantity-controls[data-id="${id}"] .quantity-display`);
+        if (quantityDisplay) {
+            quantityDisplay.textContent = newQuantity;
+            quantityDisplay.classList.add('quantity-updated');
+            setTimeout(() => quantityDisplay.classList.remove('quantity-updated'), 200);
+            
+            // Update the total price for this item
+            const price = parseFloat(item.price || 0);
+            const totalCell = quantityDisplay.closest('tr').querySelector('.product-total');
+            if (totalCell) {
+                totalCell.textContent = (price * newQuantity).toFixed(2) + ' ₾';
+            }
+        }
+        
+        // Update the cart total
+        updateCartTotal();
         updateCartCount();
     }
 }
 
-// Render the cart using template
+// Update cart total
+function updateCartTotal() {
+    if (!totalPriceElement) return;
+    
+    const total = cartItems.reduce((sum, item) => {
+        return sum + (parseFloat(item.price || 0) * (item.quantity || 1));
+    }, 0);
+    
+    totalPriceElement.textContent = total.toFixed(2) + ' ₾';
+}
+
+// Render the cart
 function renderBasket() {
     if (!basketBody) return;
     
@@ -59,49 +144,60 @@ function renderBasket() {
     basketBody.innerHTML = '';
     
     if (cartItems.length === 0) {
-        basketBody.innerHTML = '<tr><td colspan="7" class="text-center">Your cart is empty</td></tr>';
+        basketBody.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center">Your cart is empty</td>
+            </tr>`;
         if (totalPriceElement) {
             totalPriceElement.textContent = '0.00 ₾';
         }
         return;
     }
 
-    const template = document.getElementById('basketItemTemplate');
     let total = 0;
-
+    
     cartItems.forEach(item => {
-        const clone = template.content.cloneNode(true);
-        const tr = clone.querySelector('tr');
-        
-        // Set up the row
-        const img = clone.querySelector('.item-image');
-        img.src = item.image || '';
-        img.alt = item.name || '';
-        
-        // Update the template with item data
-        clone.querySelector('.item-name').textContent = item.name || '';
-        clone.querySelector('.item-price').textContent = item.price ? `${item.price.toFixed(2)} ₾` : '0.00 ₾';
-        
-        // Set up quantity controls
-        const quantityElement = clone.querySelector('.item-quantity');
-        quantityElement.textContent = item.quantity || 1;
-        
-        // Set up spicy and nuts indicators
-        clone.querySelector('.item-spicy').textContent = item.spiciness || 'No';
-        clone.querySelector('.item-nuts').textContent = item.nuts ? 'Yes' : 'No';
-        
-        // Set up delete button
-        const deleteBtn = clone.querySelector('.delete-btn');
-        deleteBtn.onclick = (e) => {
-            e.preventDefault();
-            deleteProduct(item.id);
-        };
+        const row = document.createElement('tr');
         
         // Calculate item total
         const itemTotal = (item.price || 0) * (item.quantity || 1);
         total += itemTotal;
         
-        basketBody.appendChild(clone);
+        // Create the row content
+        row.innerHTML = `
+            <td class="product-thumbnail">
+                <img src="${item.image || ''}" alt="${item.name || ''}">
+            </td>
+            <td class="product-name">${item.name || 'Unnamed Item'}</td>
+            <td class="product-quantity">
+                <div class="quantity-controls" data-id="${item.id}">
+                    <button type="button" class="qty-btn minus">-</button>
+                    <span class="quantity-display">${item.quantity || 1}</span>
+                    <button type="button" class="qty-btn plus">+</button>
+                </div>
+            </td>
+            <td class="product-price">${item.price ? item.price.toFixed(2) : '0.00'} ₾</td>
+            <td class="product-total">${itemTotal.toFixed(2)} ₾</td>
+            <td class="product-spicy">${item.spiciness !== undefined ? item.spiciness : 'No'}</td>
+            <td class="product-nuts">${item.nuts ? 'Yes' : 'No'}</td>
+            <td class="product-remove">
+                <button type="button" class="remove-btn" data-id="${item.id}" title="Remove item">×</button>
+            </td>
+        `;
+        
+        // Add event listeners to the quantity buttons
+        const controls = row.querySelector('.quantity-controls');
+        const minusBtn = controls.querySelector('.minus');
+        const plusBtn = controls.querySelector('.plus');
+        
+        minusBtn.addEventListener('click', () => updateQuantity(item.id, -1));
+        plusBtn.addEventListener('click', () => updateQuantity(item.id, 1));
+        
+        // Add event listener to the remove button
+        const removeBtn = row.querySelector('.remove-btn');
+        removeBtn.addEventListener('click', () => deleteProduct(item.id));
+        
+        basketBody.appendChild(row);
     });
 
     // Update total price
@@ -109,3 +205,40 @@ function renderBasket() {
         totalPriceElement.textContent = `${total.toFixed(2)} ₾`;
     }
 }
+
+// Handle checkout
+async function handleCheckout(event) {
+    event.preventDefault();
+    
+    if (cartItems.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+    
+    try {
+        const orderItems = cartItems.map(item => ({
+            productId: item.id,
+            quantity: item.quantity || 1
+        }));
+        
+        // In a real app, you would send this to your backend
+        console.log('Order items:', orderItems);
+        
+        // For demo purposes, just show success message
+        alert('Order placed successfully!');
+        
+        // Clear cart
+        cartItems = [];
+        localStorage.setItem('cart', JSON.stringify(cartItems));
+        renderBasket();
+        updateCartCount();
+        
+    } catch (error) {
+        console.error('Error during checkout:', error);
+        alert('There was an error processing your order. Please try again.');
+    }
+}
+
+// Make functions available globally
+window.deleteProduct = deleteProduct;
+window.updateQuantity = updateQuantity;

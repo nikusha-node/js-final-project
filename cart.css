@@ -158,20 +158,23 @@ nav {
 }
 
 .cart-table {
-    width: 100%;
+    min-width: 100%;
     border-collapse: collapse;
 }
 
 .cart-table th {
     background-color: #efefef;
     padding: 10px;
-    text-align: left;
+    text-align: center;
     font-size: 18px;
+    width: 100%;
 }
 
 .cart-table td {
-    border-bottom: 1px solid #ddd;
-    padding: 12px;
+    border-bottom: 1px solid #eee;
+    padding: 20px 15px;
+    vertical-align: middle;
+    text-align: center;
 }
 
 .product-row {
@@ -180,10 +183,174 @@ nav {
     gap: 15px;
 }
 
+/* Product thumbnail images */
+.product-thumbnail img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-thumbnail img:hover {
+    transform: scale(1.05);
+}
+
+.product-name {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+    width: 120px;
+    margin: 0 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-price {
+    font-weight: 500;
+    color: #333;
+}
+
+.product-total {
+    font-weight: 600;
+    color: #ff6b00;
+}
+
+/* Quantity controls */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ddd;
+    background: #f8f8f8;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.qty-btn:hover {
+    background: #eee;
+    border-color: #ccc;
+}
+
+.qty-btn:active {
+    transform: scale(0.95);
+}
+
+.quantity-display {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.quantity-updated {
+    transform: scale(1.2);
+    color: #ff6b00;
+    font-weight: bold;
+}
+
+/* SweetAlert2 Custom Styles */
+.swal2-popup {
+    font-family: inherit;
+    border-radius: 8px;
+}
+
+.swal2-title {
+    color: #333;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.swal2-html-container {
+    color: #555;
+    font-size: 16px;
+}
+
+.swal2-confirm.swal2-styled {
+    background-color: #df1313;
+    color: white;
+    border: 2px solid #ff6b00;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin: 0 8px;
+}
+
+.swal2-confirm.swal2-styled:hover {
+    background-color: transparent;
+    color: #ff6b00;
+    border-color: #ff6b00;
+}
+
+.swal2-cancel.swal2-styled {
+    background-color: transparent;
+    color: #555;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin: 0 8px;
+}
+
+.swal2-cancel.swal2-styled:hover {
+    background-color: #f8f8f8;
+    border-color: #ccc;
+}
+
+/* Remove button */
+.remove-btn {
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.remove-btn:hover {
+    background: #ff0000;
+    transform: translateY(-1px);
+}
+
+.remove-btn:active {
+    transform: translateY(0);
+}
+
+/* Hover effect for table rows */
+tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
 .product-row img {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
 }
 
 .delete.btn {
