@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <header>
+        <nav class="fixed">
+            <div class="logo">
+                <div class="logo-main">Step</div>
+                <div class="logo-sub">Ordering</div>
+            </div>
+            <div class="nav-rigth">
+                <a href="#" class="cart-btn"><span class="cart-text">Cart</span>
+                    <span class="bike-icon"><img src="img/delivery-man (1).png" alt=""></span>
+                    <span class="line"></span>
+                </a>
+            </div>
+        </nav>
+        <div class="background-img"></div>
+    </header>
+
+    <main>
+
+        <section class="category-main">
+
+            <div class="category">
+                <div class="category-header">
+                    <p>Category<span class="arrow">▾</span></p>
+                </div>
+
+                <ul class="category-list" id="categoryList">
+                </ul>
+            </div>
+
+            <div class="filter-box">
+                <div class="top-text">
+                    <h4>Filter</h4>
+                </div>
+                <div class="filter-range">
+                    <label for="" id="spiceLabel">Spiciness: Not Chosen</label>
+                    <br>
+                    <input type="range" name="range" id="range" max="5" value="0">
+                </div>
+
+                <div class="check">
+                    <div>
+                        <input type="checkbox" name="" id="noNuts">
+                        <label for="">No Nuts</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="" id="vegeterian">
+                        <label for="">Vegeterian Only</label>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button id="resetBtn">RESET</button>
+                    <button>APPLY FILTER</button>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section>
+            <template id="product-template">
+                <div class="product-card">
+                    <img class="product-img" src="" alt="">
+                    <h3 class="product-name"></h3>
+
+                    <div class="product-info">
+                        <span class="spicy"></span>
+                        <div>
+                            <span class="nuts"></span>
+                            <span class="vegeteriann"></span>
+                        </div>
+                    </div>
+
+                    <div class="bottomm">
+                        <span class="product-price"></span>
+                        <button class="add-btn">Add to cart</button>
+                    </div>
+                </div>
+            </template>
+
+            <div id="products" class="product-main"></div>
+        </section>
+    </main>
+
+
+    <footer>
+        <p class="footer-p">&copy; Step Ordering 2025, All right reserved</p>
+    </footer>
+
+    <script src="/script.js"></script>
+</body>
+</html>
