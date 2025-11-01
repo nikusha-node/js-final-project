@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+    
+      <header>
+        <nav class="fixed">
+            <div class="logo">
+                <div class="logo-main">Step</div>
+                <div class="logo-sub">Ordering</div>
+            </div>
+            <div class="nav-rigth">
+                <a href="cart.html" class="cart-btn"><span class="cart-text">Cart</span>
+                    <span class="bike-icon"><img src="img/delivery-man (1).png" alt=""></span>
+                    <span class="line"></span>
+                </a>
+            </div>
+        </nav>
+        <div class="background-img"></div>
+    </header>
+
+    <main>
+
+        <section class="section">
+            <a href="index.html">Home</a> / <span>Cart</span>
+        </section>
+
+        <section class="cart-wrapper">
+        <h2>Cart</h2>
+
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Spicy</th>
+                    <th>Nuts</th>
+                </tr>
+            </thead>
+
+            <tbody id="basketBody">
+                <template id="basketItemTemplate">
+                    <tr>
+                        <td><img class="item-image" width="50"></td>
+                        <td class="item-name"></td>
+                        <td class="item-price"></td>
+                        <td class="item-quantity"></td>
+                        <td class="item-spicy"></td>
+                        <td class="item-nuts"></td>
+                        <td><button class="delete-btn">X</button></td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+
+        <div class="checkout">
+            <p class="price">Total: <span id="price">$0</span></p>
+            <button class="checkout-btn">PROCEED TO CHECKOUT</button>
+        </div>
+    </section>
+
+    </main>
+
+    <script src="/cart.js"></script>
+</body>
+</html>
