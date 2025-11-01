@@ -13,50 +13,41 @@ window.addEventListener("scroll", function() {
 
 // ---------------- category
 
-const categoryHeader = document.querySelector(".category-header")
-const categoryList = document.querySelector(".category-list")
-
-categoryHeader.addEventListener("click", () => {
-    categoryHeader.classList.toggle("active");
-    if (categoryList.style.maxHeight) {
-        categoryList.style.maxHeight = null;
-        categoryList.classList.remove("open")
-    } else {
-        categoryList.style.maxHeight = categoryList.scrollHeight + "px";
-        
-        setTimeout(() => {
-            categoryList.classList.add("open");
-        }, 150);
-    }
-})
-
-const API_Categories = "https://restaurant.stepprojects.ge/api/Categories/GetAll";
+const categoryContainer = document.querySelector(".category-inline");
 
 async function loadCategories() {
     try {
-        const respons = await fetch(API_Categories);
-        const data = await respons.json();
+        const response = await fetch("https://restaurant.stepprojects.ge/api/Categories/GetAll");
+        const data = await response.json();
 
-        categoryList.innerHTML = "";
+        data.forEach(category => {
+            const btn = document.createElement("button");
+            btn.textContent = category.name;
+            btn.classList.add("category-btn");
+            btn.dataset.id = category.id;
 
-        data.forEach(categoryy => {
-            const li = document.createElement("li");
-            li.textContent = categoryy.name;
-            categoryList.appendChild(li);
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".category-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                filterByCategory(category.id);
+            });
+
+            categoryContainer.appendChild(btn);
         });
 
-        if (categoryHeader.classList.contains("active")) {
-            categoryList.style.maxHeight = categoryList.scrollHeight + "px";
-        }
-
+        document.querySelector(".category-btn[data-id='0']").addEventListener("click", () => {
+            document.querySelectorAll(".category-btn").forEach(b => b.classList.remove("active"));
+            document.querySelector(".category-btn[data-id='0']").classList.add("active");
+            filterByCategory(0);
+        });
 
     } catch (error) {
-        console.error("error loading categories:", error)
+        console.error("Error loading categories:", error);
     }
 }
 
+loadCategories();
 
-loadCategories()
 
 
 // -------------- filter
