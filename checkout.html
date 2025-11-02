@@ -6,28 +6,30 @@
     <title>Checkout - Complete Your Order</title>
     <link rel="stylesheet" href="checkout.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 </head>
 <body>
     
-    <header class="header">
-    <div class="header-main">
-      <a href="main.html" class="header-left">
-        <p class="step">Step</p>
-        <p class="ordering">Ordering</p>
-      </a>
-      <div class="header-right">
-        <a href="#" class="cart-btn">
-          <span class="cart-text">Cart</span>
-          <span class="bike-icon">
-            <img src="delivery-man_1.png" alt="delivery">
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class="header-middle">
-      <h1>checkout</h1>
-    </div>
-  </header>
+     <header>
+        <nav class="fixed">
+            <div class="logo" onclick="window.location.href='index.html'">
+                <div class="logo-main">Step</div>
+                <div class="logo-sub">Ordering</div>
+            </div>
+            <div class="nav-rigth">
+                <a href="cart.html" class="cart-btn">
+                    <div class="cart-content">
+                        <span class="cart-text">Cart (0)</span>
+                        <span class="bike-icon">
+                        <img src="img/delivery-man (1).png" alt="Cart" width="24" height="24">
+                        </span>
+                    </div>
+                    <span class="line"></span>
+                </a>
+            </div>
+        </nav>
+        <div class="background-img"></div>
+    </header>
 
   <div class="header-placeholder"></div>
 
@@ -67,34 +69,24 @@
     </div>
     <div class="footer-links">
 
-
-      <a href="index.html"> <svg xmlns="http://www.w3.org/2000/svg" height="14" width="14"
-          viewBox="0 0 512 512">
-          <path fill="#FFD43B"
-            d="M169.7 .9c-22.8-1.6-41.9 14-47.5 34.7L110.4 80c.5 0 1.1 0 1.6 0c176.7 0 320 143.3 320 320c0 .5 0 1.1 0 1.6l44.4-11.8c20.8-5.5 36.3-24.7 34.7-47.5C498.5 159.5 352.5 13.5 169.7 .9zM399.8 410.2c.1-3.4 .2-6.8 .2-10.2c0-159.1-128.9-288-288-288c-3.4 0-6.8 .1-10.2 .2L.5 491.9c-1.5 5.5 .1 11.4 4.1 15.4s9.9 5.6 15.4 4.1L399.8 410.2zM176 208a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm64 128a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM96 384a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
-        </svg> Home</a> 
-
-
-
-
     </div>
     <div class="footer-social">
       <p>Follow us:</p>
 
-      <a href="https://www.facebook.com/" target="_blank" class="social-icon">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_(2019).svg" alt="Facebook"
-          width="24" height="24">
-      </a>
+      <div class="icon">
+        <a href="https://www.facebook.com/" target="_blank" class="social-icon">
+          <i class="fa-brands fa-facebook"></i>
+        </a>
 
-      <a href="https://www.instagram.com/" target="_blank" class="social-icon">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="24"
-          height="24">
-      </a>
+        <a href="https://www.instagram.com/" target="_blank" class="social-icon">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </div>
 
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&copy; 2025 Step Restaurant. All rights reserved. This Website is made by <span>Oto Kristesiashvili and Luka Bediashvili</span>.</p>
+    <p>&copy; 2025 Step Restaurant. All rights reserved.</p>
   </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="checkout.js"></script>

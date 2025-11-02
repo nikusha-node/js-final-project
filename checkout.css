@@ -5,137 +5,132 @@
 }
 
 body {
-  font-family: cursive;
-  position: relative;
+    background-image: url('https://restaurant.stepprojects.ge/images/p_bg.jpg');
 }
 
-body::after {
-  content: '';
-  position: absolute;
-  top: 42vh;
-  left: 0;
-  right: 0;
-  height: 100px;
-  background: #f6f7fb;
-  z-index: -1;
-  pointer-events: none;
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 20px;
+    background-color: rgba(253, 122, 0, 0.911);
+    color: white;
 }
 
-a {
-  text-decoration: none;
+.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10vh;
+    padding: 3.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid transparent;
+    transition: background-color 0.3s ease, border-bottom 0.3s ease;
+    z-index: 1000;
 }
 
-/* header ძირითადი */
-.header {
-  background-image: url('https://restaurant.stepprojects.ge/images/inner_banner.jpg');
-  background-size: 100% 100%;
-  width: 100%;
-  height: 42vh;
-  position: relative;
+.fixed.scrolled {
+  background-color: rgba(0, 0, 0, 0.8) ;
+  border-bottom: 1px solid rgba(253, 122, 0, 0.911);
+  box-shadow:0px 25px 20px -20px rgba(253, 122, 0, 0.911);
 }
 
-/* ფიქსირებული ზედა ზოლი */
-.header-main {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 10vh;
-  padding: 3.5rem;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  border-bottom: 2px solid transparent;
-  z-index: 1000;
+.logo-main {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
 }
 
-.header-main.scrolled {
-  background-color: rgba(0, 0, 0, 0.8);
-  border-bottom: 1px solid red;
-  box-shadow: rgba(228, 13, 13, 0.45) 0px 25px 20px -20px;
+.logo-sub {
+    font-size: 1.2rem;
+    padding-left: 50px;
 }
 
-.header-placeholder {
-  height: 10vh;
+.nav-rigth {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
 }
 
-.header-left {
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
+.nav-rigth a {
+    text-decoration-line: none;
+    color: white;
+    font-size: 1.3rem;
 }
 
-.step {
-  font-size: 2.7rem;
+.cart-content {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.ordering {
-  font-size: 1.5rem;
-  padding-left: 4rem;
-  color: white;
-}
-
-.header-left p {
-  color: white;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-}
-
-/* კალათის ღილაკი */
 .cart-btn {
-  padding: 0.7rem 1.2rem 0.7rem 1.5rem;
-  display: flex;
-  align-items: center;
-  width: 125px;
-  gap: 5px;
-}
-
-.cart-btn:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease;
+    padding: 0.7rem 1.2rem 0.7rem 1.5rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 125px;
+    gap: 5px;
+    text-decoration: none;
 }
 
 .cart-text {
-  color: white;
-  background-color: #ff021b;
-  min-width: 60px;
-  border-radius: 7px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    background: transparent;
+    border: 2px solid white;
+    min-width: 60px;
+    border-radius: 7px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    white-space: nowrap;
 }
 
 .bike-icon {
-  display: inline-block;
-  filter: brightness(0) invert(1);
-  transition: transform 0.6s ease-out;
+    display: inline-block;
+    filter: brightness(0) invert(1);
+    transition: transform 0.6s ease-out;
 }
 
 .cart-btn:hover .bike-icon {
-  transform: translateX(15px);
+    transform: translateX(15px);
 }
 
-.header-middle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: calc(52vh - 10vh);
-  padding-top: 10vh;
-  text-align: center;
+.line {
+    position: absolute;
+    bottom: 57%;
+    left: 30px;
+    width: 100%;
+    height: 2px;
+    background: transparent;
+    pointer-events: none;
 }
 
-.header-middle h1 {
-  color: white;
-  font-weight: 600;
-  font-size: 60px;
-  line-height: 1.4;
-  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+.line::after {
+    content: '';
+    position: absolute;
+    left: 90px;
+    top: 15px;
+    width: 0;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    transition: width 0.6s ease-out;
+}
 
+.cart-btn:hover .line::after {
+    width: 60px;
+}
+
+
+.background-img {
+    background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836') center/cover;
+    height: 600px;
+    width: 100%;
 }
 
 /* CHECKOUT */
@@ -145,6 +140,7 @@ a {
   justify-content: center;
   background: #f6f7fb;
   min-height: 80vh;
+   background-image: url('https://restaurant.stepprojects.ge/images/p_bg.jpg');
 }
 
 .checkout-box {
@@ -272,7 +268,8 @@ a {
 .footer-logo-step {
     font-size: 24px;
     font-weight: bold;
-    color: red;
+    color:  rgba(253, 122, 0, 0.911);
+    padding-right: 110px;
 }
 
 .footer-logo-restaurant {
@@ -295,7 +292,7 @@ a {
 }
 
 .footer-links a:hover {
-    color: red;
+    color: rgba(253, 122, 0, 0.911);
 }
 
 .footer-social {
@@ -316,13 +313,18 @@ a {
     transition: color 0.3s ease;
 }
 
-.social-icon:hover {
-    color: red;
-}
-
 .footer-social {
     flex: 1;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .footer-social p {
