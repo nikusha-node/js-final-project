@@ -149,7 +149,7 @@ function addToCart(product) {
     
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
-    showNotification(`${product.name} added to cart!`);
+    
 }
 
 
@@ -163,15 +163,47 @@ function updateCartCount() {
     }
 }
 
+// Update navigation based on authentication status
+function updateNavigation() {
+    const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
+    const currentUser = localStorage.getItem('currentUser');
+    const authSection = document.querySelector('.register-btn');
+    
+    if (authSection) {
+        if (isLoggedIn && currentUser) {
+            // Show profile section
+            authSection.innerHTML = `
+                <div class="profile-section">
+                    <a href="profile.html" class="profile-link">
+                        <span class="profile-icon">👤</span>
+                        <span class="profile-name">${currentUser.split('@')[0]}</span>
+                    </a>
+                </div>`;
+        } else {
+            // Show login/register buttons
+            authSection.innerHTML = `
+                <a href="login.html" class="auth-btn">Login</a>
+                <a href="login.html#register" class="auth-btn" id="showRegisterNav">Register</a>`;
+        }
+    }
+    
+    // Update cart count
+    updateCartCount();
+}
+
 function renderProducts(products) {
     const container = document.getElementById('products');
     const template = document.getElementById('product-template');
-
-    if (products.length === 0) {
+    
+    if (!container || !template) return;
+    
+    container.innerHTML = '';
+    
+    if (!products || products.length === 0) {
         container.innerHTML = '<p class="no-products">No products found matching your filters.</p>';
         return;
     }
-
+    
     products.forEach(product => {
         const clone = template.content.cloneNode(true);
         
@@ -215,5 +247,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeCart();
     loadCategories();
     loadProducts();
-    updateCartCount();
+    updateNavigation(); // Update navigation to show profile if logged in
 });

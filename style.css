@@ -17,12 +17,53 @@ nav {
     color: white;
 }
 
+/* Profile Section Styles */
+.profile-section {
+    display: flex;
+    align-items: center;
+}
+
+.profile-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    padding: 5px 15px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.profile-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.profile-icon {
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+.profile-name {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+}
+
+/* Adjust register button container */
+.register-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .fixed {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 10vh;
+    height: 130px;
     padding: 3.5rem;
     display: flex;
     flex-direction: row;
@@ -91,6 +132,42 @@ nav {
     white-space: nowrap;
 }
 
+.header {
+    position: relative;
+}
+
+.auth-btn {
+    text-decoration-line: none;
+    color: rgb(255, 255, 255);
+    font-size: 1.3rem;
+    border: 2px solid rgb(255, 255, 255);
+    width: 120px;
+    text-align: center;
+    height: 30px;
+    border-radius: 7px;
+}
+
+.register-btn {
+    background-color: rgba(253, 122, 0, 0.911);
+    width: 300px;
+    height: 50px;
+    position: absolute;
+    top: 130px;
+    right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding: 5px;
+    border-end-start-radius: 20px;
+}
+
+.register-btn .auth-btn:hover {
+    color: rgb(253, 122, 0);
+    background-color: white;
+    transition: 0.6s;
+}
+
 .bike-icon {
     display: inline-block;
     filter: brightness(0) invert(1);
@@ -99,6 +176,7 @@ nav {
 
 .cart-btn:hover .bike-icon {
     transform: translateX(15px);
+    transition: 0.6s;
 }
 
 .line {
@@ -276,6 +354,10 @@ input[type=range]::-webkit-slider-runnable-track {
     transform: scale(1.1);
 }
 
+.product-section {
+    min-height: 500px;
+}
+
 .product-main {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -361,4 +443,21 @@ footer {
 
 .footer-p {
     font-size: 18px;
+}
+
+
+@media (max-width: 750px) {
+
+    .product-main {
+        padding: 500px 20px 20px 25%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill) minmax(250px, 1fr);
+    }
+
+    .filter-box {
+        position: absolute;
+        top: 880px;
+        left: 28%;
+    }
+    
 }

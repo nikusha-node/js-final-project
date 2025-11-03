@@ -9,17 +9,26 @@
 </head>
 <body>
     
-      <header>
+    <header class="header">
         <nav class="fixed">
             <div class="logo" onclick="window.location.href='index.html'">
                 <div class="logo-main">Step</div>
                 <div class="logo-sub">Ordering</div>
             </div>
             <div class="nav-rigth">
-                <a href="cart.html" class="cart-btn"><span class="cart-text">Cart</span>
-                    <span class="bike-icon"><img src="img/delivery-man (1).png" alt=""></span>
+                <a href="cart.html" class="cart-btn">
+                    <div class="cart-content">
+                        <span class="cart-text">Cart (0)</span>
+                        <span class="bike-icon">
+                            <img src="img/delivery-man (1).png" alt="Cart" width="24" height="24">
+                        </span>
+                    </div>
                     <span class="line"></span>
                 </a>
+            </div>
+            <div class="register-btn">
+                <a href="login.html" class="auth-btn">Login</a> 
+                <a href="#" class="auth-btn" id="showRegisterNav">Register</a>
             </div>
         </nav>
         <div class="background-img"></div>
@@ -72,6 +81,18 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const showRegisterNav = document.getElementById('showRegisterNav');
+            
+            if (showRegisterNav) {
+                showRegisterNav.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = 'login.html#register';
+                });
+            }
+        });
+    </script>
     <script src="/cart.js"></script>
 </body>
 </html>

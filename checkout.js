@@ -1,3 +1,97 @@
+
+window.addEventListener("scroll", function() {
+    const header = document.querySelector(".fixed");
+    if (window.scrollY > 0) {
+        header.classList.add("scrolled");
+    } else {
+        header.classList.remove("scrolled");
+    }
+});
+
+// Format card number with spaces
+function formatCardNumber(value) {
+    return value.replace(/\s+/g, '').replace(/(\d{4})/g, '$1 ').trim();
+}
+
+// Format expiry date as MM/YY
+function formatExpiryDate(value) {
+    return value.replace(/\D/g, '')
+        .replace(/^(\d{2})/, '$1/')
+        .replace(/^(\d{2}\d{2}).*/, '$1');
+}
+
+// Update cart count in header
+function updateCartCount() {
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartCount = cartItems.reduce((total, item) => total + (item.quantity || 1), 0);
+    const cartText = document.querySelector('.cart-text');
+    
+    if (cartText) {
+        cartText.textContent = `Cart (${cartCount})`;
+    }
+}
+
+// Load saved card info if available
+function loadSavedCard() {
+    const currentEmail = localStorage.getItem('currentUser');
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.email === currentEmail);
+    
+    if (user?.cardInfo) {
+        document.getElementById('card-number').value = formatCardNumber(user.cardInfo.cardNumber);
+        document.getElementById('expiry').value = user.cardInfo.expiryDate;
+        document.getElementById('cvc').value = user.cardInfo.cvv;
+        document.getElementById('owner').value = user.cardInfo.cardName || '';
+    }
+}
+
+// Update user profile in navigation
+function updateUserProfile() {
+    const userProfile = document.querySelector('.user-profile');
+    const registerBtn = document.querySelector('.register-btn');
+    
+    if (localStorage.getItem('loggedIn') === 'true') {
+        const currentUserEmail = localStorage.getItem('currentUser');
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const currentUser = users.find(user => user.email === currentUserEmail);
+        
+        if (currentUser) {
+            const profileImg = userProfile.querySelector('.profile-img');
+            const profileName = userProfile.querySelector('.profile-name');
+            
+            // Set profile image (use default if not set)
+            profileImg.src = currentUser.profileImage || 'img/default-profile.png';
+            profileName.textContent = currentUser.name || 'User';
+            
+            // Show profile, hide login/register
+            if (userProfile) userProfile.style.display = 'flex';
+            if (registerBtn) registerBtn.style.display = 'none';
+        }
+    } else {
+        // Hide profile, show login/register
+        if (userProfile) userProfile.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'flex';
+    }
+}
+
+// Display total amount, load saved card, and update profile on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updateCartCount();
+    updateUserProfile();
+    
+    // Get total from localStorage and display it
+    const totalAmount = localStorage.getItem('orderTotal') || '0';
+    const totalElement = document.getElementById('total-amount');
+    if (totalElement) {
+        totalElement.textContent = `${parseFloat(totalAmount).toFixed(2)}₾`;
+    }
+    
+    // Load saved card if user is logged in
+    if (localStorage.getItem('loggedIn') === 'true') {
+        loadSavedCard();
+    }
+});
+
 window.addEventListener("scroll", function() {
     const header = document.querySelector(".fixed");
     if (window.scrollY > 0) {
@@ -23,61 +117,81 @@ function onlyNumbers(text) {
   return result;
 }
 
-// ბარათის ფორმატირება
+// Card number formatting
 cardInput.addEventListener("input", function () {
   let value = onlyNumbers(cardInput.value);
   if (value.length > 16) value = value.substring(0, 16);
-  let formatted = "";
-  for (let i = 0; i < value.length; i++) {
-    formatted += value[i];
-    if ((i + 1) % 4 === 0 && i !== value.length - 1) formatted += " ";
-  }
-  cardInput.value = formatted;
+  cardInput.value = formatCardNumber(value);
 });
 
-// ვადა MM/YY
+// Expiry date formatting (MM/YY)
 expiryInput.addEventListener("input", function () {
-  let value = onlyNumbers(expiryInput.value);
-  if (value.length > 4) value = value.substring(0, 4);
-  let formatted = "";
-  for (let i = 0; i < value.length; i++) {
-    formatted += value[i];
-    if (i === 1 && value.length > 2) formatted += "/";
-  }
-  expiryInput.value = formatted;
+  expiryInput.value = formatExpiryDate(expiryInput.value);
 });
 
-// CVC
+// CVC/CVV input
 cvcInput.addEventListener("input", function () {
-  let value = onlyNumbers(cvcInput.value);
-  if (value.length > 3) value = value.substring(0, 3);
-  cvcInput.value = value;
+  cvcInput.value = onlyNumbers(cvcInput.value).substring(0, 3);
 });
 
-// trimSpaces
+// Helper functions
 function trimSpaces(text) {
   return text.trim();
 }
 
-// ფორმის გაგზავნა
+// Save card info to profile if user is logged in
+function saveCardToProfile(cardData) {
+    if (localStorage.getItem('loggedIn') !== 'true') return false;
+    
+    const currentEmail = localStorage.getItem('currentUser');
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const userIndex = users.findIndex(u => u.email === currentEmail);
+    
+    if (userIndex !== -1) {
+        if (!users[userIndex].cardInfo) {
+            users[userIndex].cardInfo = {};
+        }
+        users[userIndex].cardInfo = {
+            cardNumber: cardData.cardNumber,
+            expiryDate: cardData.expiryDate,
+            cvv: cardData.cvv,
+            cardName: cardData.owner
+        };
+        localStorage.setItem('users', JSON.stringify(users));
+        return true;
+    }
+    return false;
+}
+
+// Form submission
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  let card = trimSpaces(cardInput.value);
-  let expiry = trimSpaces(expiryInput.value);
-  let cvc = trimSpaces(cvcInput.value);
-  let owner = trimSpaces(ownerInput.value);
+  const cardNumber = trimSpaces(cardInput.value);
+  const expiry = trimSpaces(expiryInput.value);
+  const cvc = trimSpaces(cvcInput.value);
+  const owner = trimSpaces(ownerInput.value);
+  const digitsOnly = onlyNumbers(cardNumber);
 
-  let digitsOnly = onlyNumbers(card);
-
+  // Validation
   if (digitsOnly.length !== 16) {
     Swal.fire({
       icon: "error",
-      title: "ბარათის ნომერი არასწორია!",
-      text: "უნდა იყოს 16 ციფრი",
+      title: "Invalid Card Number",
+      text: "Card number must be 16 digits",
       confirmButtonColor: "#d33",
     });
     return;
+  }
+  
+  // Save card info to profile if user is logged in
+  if (localStorage.getItem('loggedIn') === 'true') {
+    saveCardToProfile({
+      cardNumber: digitsOnly,
+      expiryDate: expiry,
+      cvv: cvc,
+      owner: owner
+    });
   }
 
   if (expiry.length !== 5 || expiry[2] !== "/") {

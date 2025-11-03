@@ -8,7 +8,7 @@
 </head>
 <body>
     
-    <header>
+   <header class="header">
         <nav class="fixed">
             <div class="logo" onclick="window.location.href='index.html'">
                 <div class="logo-main">Step</div>
@@ -19,11 +19,15 @@
                     <div class="cart-content">
                         <span class="cart-text">Cart (0)</span>
                         <span class="bike-icon">
-                        <img src="img/delivery-man (1).png" alt="Cart" width="24" height="24">
+                            <img src="img/delivery-man (1).png" alt="Cart" width="24" height="24">
                         </span>
                     </div>
                     <span class="line"></span>
                 </a>
+            </div>
+            <div class="register-btn">
+                <a href="login.html" class="auth-btn">Login</a> 
+                <a href="#" class="auth-btn" id="showRegisterNav">Register</a>
             </div>
         </nav>
         <div class="background-img"></div>
@@ -72,7 +76,7 @@
         </section>
 
 
-        <section>
+        <section class="product-section">
             <template id="product-template">
                 <div class="product-card">
                     <img class="product-img" src="" alt="">

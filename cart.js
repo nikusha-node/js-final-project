@@ -1,4 +1,4 @@
-// Scroll effect for header
+
 window.addEventListener("scroll", function() {
     const header = document.querySelector(".fixed");
     if (window.scrollY > 0) {
@@ -69,7 +69,7 @@ async function deleteProduct(id, event) {
             // Show success message
             await Swal.fire({
                 title: 'Removed!',
-                text: 'The item has been removed from your cart.',
+                text: `The item has been removed from your cart. ${item.name}`,
                 icon: 'success',
                 timer: 1500,
                 showConfirmButton: false
@@ -198,6 +198,9 @@ function renderBasket() {
     });
 
     // Update total price
+    if (totalPriceElement) {
+        totalPriceElement.textContent = total.toFixed(2) + ' ₾';
+    }
     if (totalPriceElement) {
         totalPriceElement.textContent = `${total.toFixed(2)} ₾`;
     }
