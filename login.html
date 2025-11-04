@@ -4,107 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login & Register - Step Ordering</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="login.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-    <style>
-        .swal2-popup {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-        
-        .auth-container {
-            max-width: 500px;
-            margin: 200px auto 50px;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .form {
-            display: none;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
-        .form.active {
-            display: flex;
-        }
-        
-        .form h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 1.5rem;
-        }
-        
-        .form input, .form select {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        
-        .form input:focus, .form select:focus {
-            outline: none;
-            border-color: #fd7a00;
-        }
-        
-        .form button {
-            background: #fd7a00;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 1rem;
-            transition: all 0.3s;
-        }
-        
-        .form button:hover {
-            background: #e06d00;
-            transform: translateY(-2px);
-        }
-        
-        .form p {
-            text-align: center;
-            margin-top: 1rem;
-            color: #666;
-        }
-        
-        .toggle {
-            color: #fd7a00;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        
-        .toggle:hover {
-            text-decoration: underline;
-        }
-        
-        .form-footer {
-            text-align: center;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #eee;
-        }
-
-        footer {
-            background-color: rgba(253, 122, 0, 0.911);
-            height: 101px;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .footer-p {
-            font-size: 18px;
-        }
-
-
-    </style>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <header class="header">
@@ -127,6 +29,17 @@
             <div class="register-btn">
                 <a href="login.html" class="auth-btn">Login</a> 
                 <a href="#" class="auth-btn" id="showRegisterNav">Register</a>
+            </div>
+            <div class="burger-main">
+                <div class="burger" id="burger"><i class="fa-solid fa-bars"></i></div>
+                <div class="nav" id="nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                        <li><a href="profile.html" id="mobileProfile">Profile</a></li>
+                        <li><a href="login.html" id="mobileLogin">Login</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
         <div class="background-img"></div>

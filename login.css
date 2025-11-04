@@ -75,9 +75,9 @@ nav {
 }
 
 .fixed.scrolled {
-  background-color: rgba(0, 0, 0, 0.8) ;
-  border-bottom: 1px solid rgba(253, 122, 0, 0.911);
-  box-shadow:0px 25px 20px -20px rgba(253, 122, 0, 0.911);
+    background-color: rgba(0, 0, 0, 0.8);
+    border-bottom: 1px solid rgba(253, 122, 0, 0.911);
+    box-shadow: 0px 25px 20px -20px rgba(253, 122, 0, 0.911);
 }
 
 .logo-main {
@@ -211,230 +211,94 @@ nav {
     width: 100%;
 }
 
-.category-main {
-    display: flex;
-    justify-content: space-between;
-    padding: 30px;
-    flex-direction: column;
-    position: relative;
+.swal2-popup {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.category {
-    display: flex;
-    align-items: end;
-    justify-content: center;
-}
-
-.text1 {
-    display: flex;
-    justify-content: center;
-    height: 40px;
-    padding-bottom: 70px;
-}
-
-.category-inline {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    padding-bottom: 20px;
-    border-bottom: 2px solid rgba(253, 122, 0, 0.911);
-}
-
-.category-btn {
-    background-color: rgba(253, 122, 0, 0.911);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.category-btn:hover {
-    background-color: #e06a00;
-}
-
-.category-btn.active {
-    box-shadow: 0 0 0 3px rgba(253,122,0,0.5);
-}
-
-.filter-box {
-    display: flex;
-    width: 250px;
-    height: 400px;
-    border: 1px solid rgba(0, 0, 0, 0.274);
-    align-items: center;
-    gap: 30px;
-    padding: 10px;
-    flex-direction: column;
-    position: absolute;
-    top: 810px;
-    left: 50px;
-    border-radius: 8px;
-    background-color: #f1f1f1;
-}
-
-.filter-range {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.check {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    cursor: pointer;
-}
-
-.check input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-}
-
-input[type=range] {
-    -webkit-appearance: none; 
-    -moz-appearance: none; 
-    appearance: none;  
-    width: 150px;
-    height: 8px;
-    border-radius: 5px;
-    background: #ddd; 
-    outline: none;
-}
-
-input[type=range]::-moz-range-track {
-    background: #ddd;
-    height: 8px;
-    border-radius: 5px;
-}
-
-input[type=range]::-webkit-slider-runnable-track {
-    background: #ddd;
-    height: 8px;
-    border-radius: 5px;
-}
-
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: rgb(253, 122, 0); 
-    cursor: pointer;
-    margin-top: -6px;
-}
-
-input[type=range]::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, rgb(253, 122, 0) 100%);
-}
-
-.buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    width: 140px;
-}
-
-.buttons button {
-    height: 40px;
-    background-color: rgba(253, 122, 0, 0.911);
-    border: none;
-    color: white;
-    font-size: 16px;
+.auth-container {
+    max-width: 500px;
+    margin: 200px auto 50px;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.buttons button:hover {
-    border: 2px solid rgba(253, 122, 0, 0.911);
-    background: transparent;
-    color: rgba(253, 122, 0, 0.911);
-    transition: 0.6s;
-    transform: scale(1.1);
-}
-
-.product-section {
-    min-height: 500px;
-}
-
-.product-main {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
-    padding: 30px 60px 100px 380px;
-    width: 100%;
-    justify-content: center;
-}
-
-.product-card {
-    width: 300px;
-    height: 420px;
-    background: #fff;
-    border-radius: 14px;
-    overflow: hidden;
-    display: flex;
+.form {
+    display: none;
     flex-direction: column;
-    border: 1px solid #cfcfcf;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    align-items: center;
+    gap: 1rem;
 }
 
-.product-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
-}
-
-.product-name {
-    font-size: 24px;
-}
-
-.product-img {
-    width: 100%;
-    height: 250px;
-    background-color: #cfcfcf;
-    object-fit: cover;
-}
-
-.product-info {
+.form.active {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
 }
 
-.bottomm {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 25px;
+.form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
 }
 
-.product-price {
-    font-size: 1.20rem;
+.form input,
+.form select {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
 }
 
-.add-btn {
-    background: transparent;
-    width: 120px;
-    height: 35px;
-    border-radius: 7px;
-    cursor: pointer;
+.form input:focus,
+.form select:focus {
+    outline: none;
+    border-color: #fd7a00;
 }
 
-.product-card:hover .add-btn {
-    background: rgba(253, 122, 0, 0.911); 
-    transform: scale(1.05);
-    transition: 0.s;
+.form button {
+    background: #fd7a00;
     color: white;
-    border: 1px solid white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s;
 }
 
+.form button:hover {
+    background: #e06d00;
+    transform: translateY(-2px);
+}
+
+.form p {
+    text-align: center;
+    margin-top: 1rem;
+    color: #666;
+}
+
+.toggle {
+    color: #fd7a00;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.toggle:hover {
+    text-decoration: underline;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
 
 footer {
     background-color: rgba(253, 122, 0, 0.911);
-    height: 70px;
+    height: 101px;
     color: white;
     display: flex;
     align-items: center;
@@ -507,18 +371,6 @@ footer {
 
 
 @media (max-width: 750px) {
-
-    .product-main {
-        padding: 500px 20px 20px 25%;
-        display: grid;
-        grid-template-columns: repeat(auto-fill) minmax(250px, 1fr);
-    }
-
-    .filter-box {
-        position: absolute;
-        top: 880px;
-        left: 28%;
-    }
 
     .burger-main {
         display: flex;

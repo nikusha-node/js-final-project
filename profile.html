@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
       .profile-container {
         max-width: 800px;
@@ -107,40 +108,130 @@
         margin: 5px 0;
         color: #2e7d32;
       }
+
+      
+      .burger-main {
+        display: flex;
+        align-items: end;
+        justify-content: end;
+        z-index: 10;
+        position: relative;
+      }
+
+      .burger {
+        cursor: pointer;
+        font-size: 24px;
+        color: white;
+        padding: 10px;
+        transition: transform 0.3s;
+        z-index: 1000;
+      }
+
+      .burger.active {
+        transform: rotate(90deg);
+      }
+
+      .nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background-color: rgb(253, 122, 0);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: right 1.2s ease;
+      }
+
+      .nav.active {
+        right: 0;
+      }
+
+      .nav ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .nav ul li a {
+        color: white;
+        text-decoration-line: none;
+        display: block;
+        padding: 12px 25px;
+        transition: all 0.3s;
+        font-size: 20px;
+      }
+
+      .nav ul li a:hover {
+        transform: scale(1.2);
+      }
+
+      .burger-main {
+        display: none;
+      }
+
+
+      @media (max-width: 750px) {
+    
+          .burger-main {
+              display: flex;
+          }
+        
+          .register-btn {
+              display: none;
+          }
+        
+          .nav-rigth {
+              display: none;
+          }
+
+      }
     </style>
   </head>
   <body>
 
-     <header class="header">
-        <nav class="fixed">
-            <div class="logo" onclick="window.location.href='index.html'">
-                <div class="logo-main">Step</div>
-                <div class="logo-sub">Ordering</div>
+    <header class="header">
+      <nav class="fixed">
+        <div class="logo" onclick="window.location.href='index.html'">
+          <div class="logo-main">Step</div>
+          <div class="logo-sub">Ordering</div>
+        </div>
+        <div class="nav-rigth">
+          <a href="cart.html" class="cart-btn">
+            <div class="cart-content">
+              <span class="cart-text">Cart (0)</span>
+              <span class="bike-icon">
+                <img src="img/delivery-man (1).png" alt="Cart" width="24"
+                  height="24">
+              </span>
             </div>
-            <div class="nav-rigth">
-                <a href="cart.html" class="cart-btn">
-                    <div class="cart-content">
-                        <span class="cart-text">Cart (0)</span>
-                        <span class="bike-icon">
-                            <img src="img/delivery-man (1).png" alt="Cart" width="24" height="24">
-                        </span>
-                    </div>
-                    <span class="line"></span>
-                </a>
-            </div>
-            <div class="register-btn">
-                <a href="login.html" class="auth-btn">Login</a> 
-                <a href="#" class="auth-btn" id="showRegisterNav">Register</a>
-            </div>
-        </nav>
-        <div class="background-img"></div>
+            <span class="line"></span>
+          </a>
+        </div>
+        <div class="register-btn">
+          <a href="login.html" class="auth-btn">Login</a>
+          <a href="#" class="auth-btn" id="showRegisterNav">Register</a>
+        </div>
+        <div class="burger-main">
+          <div class="burger" id="burger"><i class="fa-solid fa-bars"></i></div>
+          <div class="nav" id="nav">
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="cart.html">Cart</a></li>
+              <li><a href="profile.html" id="mobileProfile">Profile</a></li>
+              <li><a href="login.html" id="mobileLogin">Login</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="background-img"></div>
     </header>
 
     <div class="profile-container">
       <div class="profile-header">
         <h1 id="welcome"></h1>
       </div>
-      
+
       <div class="profile-info">
         <p><strong>Email:</strong> <span id="email"></span></p>
         <p><strong>Phone:</strong> <span id="phone"></span></p>
@@ -149,35 +240,40 @@
       <div class="card-form">
         <h3>Payment Information</h3>
         <div id="savedCardInfo" class="saved-card" style="display: none;">
-          <p><strong>Card ending in:</strong> <span id="cardLastFour"></span></p>
+          <p><strong>Card ending in:</strong> <span
+              id="cardLastFour"></span></p>
           <p><strong>Expires:</strong> <span id="cardExpiry"></span></p>
-          <button id="editCardBtn" class="btn btn-primary" style="margin-top: 10px;">Edit Card</button>
+          <button id="editCardBtn" class="btn btn-primary"
+            style="margin-top: 10px;">Edit Card</button>
         </div>
 
         <form id="cardForm" style="display: none;">
           <div class="form-group">
             <label for="cardNumber">Card Number</label>
-            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456"
+              maxlength="19">
           </div>
-          
+
           <div class="form-row">
             <div class="form-group">
               <label for="expiryDate">Expiry Date (MM/YY)</label>
-              <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5">
+              <input type="text" id="expiryDate" placeholder="MM/YY"
+                maxlength="5">
             </div>
             <div class="form-group">
               <label for="cvv">CVV</label>
               <input type="text" id="cvv" placeholder="123" maxlength="3">
             </div>
           </div>
-          
+
           <div class="form-group">
             <label for="cardName">Name on Card</label>
             <input type="text" id="cardName" placeholder="John Doe">
           </div>
-          
+
           <button type="submit" class="btn btn-primary">Save Card</button>
-          <button type="button" id="cancelEditBtn" class="btn" style="margin-left: 10px;">Cancel</button>
+          <button type="button" id="cancelEditBtn" class="btn"
+            style="margin-left: 10px;">Cancel</button>
         </form>
       </div>
 
@@ -291,6 +387,30 @@
         localStorage.removeItem("currentUser");
         window.location.href = "login.html";
       };
+
+      // Burger menu functionality
+      document.addEventListener('DOMContentLoaded', function () {
+        const burger = document.getElementById('burger');
+        const nav = document.getElementById('nav');
+
+        if (burger && nav) {
+          burger.addEventListener('click', (e) => {
+              e.stopPropagation();
+              nav.classList.toggle('active');
+              burger.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        const navLinks = document.querySelectorAll('.nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                burger.classList.remove('active');
+            });
+        });
+    }
+});
+
 
       // Initialize
       loadCardInfo();

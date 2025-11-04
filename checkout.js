@@ -45,35 +45,6 @@ function loadSavedCard() {
     }
 }
 
-// Update user profile in navigation
-function updateUserProfile() {
-    const userProfile = document.querySelector('.user-profile');
-    const registerBtn = document.querySelector('.register-btn');
-    
-    if (localStorage.getItem('loggedIn') === 'true') {
-        const currentUserEmail = localStorage.getItem('currentUser');
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        const currentUser = users.find(user => user.email === currentUserEmail);
-        
-        if (currentUser) {
-            const profileImg = userProfile.querySelector('.profile-img');
-            const profileName = userProfile.querySelector('.profile-name');
-            
-            // Set profile image (use default if not set)
-            profileImg.src = currentUser.profileImage || 'img/default-profile.png';
-            profileName.textContent = currentUser.name || 'User';
-            
-            // Show profile, hide login/register
-            if (userProfile) userProfile.style.display = 'flex';
-            if (registerBtn) registerBtn.style.display = 'none';
-        }
-    } else {
-        // Hide profile, show login/register
-        if (userProfile) userProfile.style.display = 'none';
-        if (registerBtn) registerBtn.style.display = 'flex';
-    }
-}
-
 // Display total amount, load saved card, and update profile on page load
 document.addEventListener('DOMContentLoaded', function() {
     updateCartCount();
@@ -264,4 +235,28 @@ form.addEventListener("submit", function (e) {
       });
     }
   }, 2000);
+});
+
+
+// Burger menu functionality
+document.addEventListener('DOMContentLoaded', function () {
+    const burger = document.getElementById('burger');
+    const nav = document.getElementById('nav');
+
+    if (burger && nav) {
+        burger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            nav.classList.toggle('active');
+            burger.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        const navLinks = document.querySelectorAll('.nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                burger.classList.remove('active');
+            });
+        });
+    }
 });

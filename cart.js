@@ -235,6 +235,29 @@ async function handleCheckout(event) {
     window.location.href = 'checkout.html';
 }
 
+// Burger menu functionality
+document.addEventListener('DOMContentLoaded', function () {
+    const burger = document.getElementById('burger');
+    const nav = document.getElementById('nav');
+
+    if (burger && nav) {
+        burger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            nav.classList.toggle('active');
+            burger.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        const navLinks = document.querySelectorAll('.nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                burger.classList.remove('active');
+            });
+        });
+    }
+});
+
 // Make functions available globally
 window.deleteProduct = deleteProduct;
 window.updateQuantity = updateQuantity;
